@@ -19,21 +19,28 @@ const LoginForm = (props: any) => {
 
     const handleButtonClicked = (event: MouseEvent<HTMLButtonElement>) => {
 
+        switch (event.currentTarget.id) {
+            case "btnSubmit": {
+                console.log("Submit")
+                break
+            }
+        }
+
     }
 
     const handleTextChanged = (event: ChangeEvent<HTMLInputElement>) => {
 
-        switch (event.target.id) {
+        switch (event.currentTarget.id) {
             case "teEmail": {
-                setEmail(event.target.value)
+                setEmail(event.currentTarget.value)
                 break
             }
             case "teUsername": {
-                setUsername(event.target.value)
+                setUsername(event.currentTarget.value)
                 break
             }
             case "tePassword1": {
-                setPassword(event.target.value)
+                setPassword(event.currentTarget.value)
                 break
             }
             case "tePassword2": {
@@ -60,7 +67,10 @@ const LoginForm = (props: any) => {
             <Label
                 text={"Email"}
             />
-            <TextEdit/>
+            <TextEdit
+                id={"teEmail"}
+                onTextChanged={handleTextChanged}
+            />
 
             <Label
                 text={"Username"}
