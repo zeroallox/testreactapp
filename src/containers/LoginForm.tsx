@@ -1,8 +1,9 @@
-import React, {MouseEvent, ChangeEvent, useState} from "react";
+import React from "react";
 //
 import TextEdit from "../components/TextEdit";
 import Label from "../components/Label";
 import Button from "../components/Button";
+import {log} from "util";
 
 enum LoginFormMode {
     MODE_INVALID,
@@ -12,12 +13,23 @@ enum LoginFormMode {
 
 const LoginForm = (props: any) => {
 
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [mode, setMode] = useState(LoginFormMode.MODE_LOGIN)
+    const [email, setEmail] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [mode, setMode] = React.useState(LoginFormMode.MODE_LOGIN)
 
-    const handleButtonClicked = (event: MouseEvent<HTMLButtonElement>) => {
+    // Will only get called on mount, one time.
+    React.useEffect(() => {
+        console.log("Component Did Load")
+    }, [])
+
+    // Will get called whenever the state items
+    // in the arg list are changes
+    React.useEffect(() => {
+        console.log("One of the things changed")
+    }, [email, username, password])
+
+    const handleButtonClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
 
         switch (event.currentTarget.id) {
             case "btnSubmit": {
@@ -25,10 +37,9 @@ const LoginForm = (props: any) => {
                 break
             }
         }
-
     }
 
-    const handleTextChanged = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleTextChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         switch (event.currentTarget.id) {
             case "teEmail": {
@@ -50,6 +61,10 @@ const LoginForm = (props: any) => {
         }
     }
 
+    const logSomething = (message: any) => {
+        console.log(message)
+    }
+
     return (
 
         <div style={{
@@ -59,6 +74,8 @@ const LoginForm = (props: any) => {
             alignItems: "flexcenterx",
             justifyContent: "center",
         }}>
+
+            {logSomething("Render")}
 
             {/*<Button id={"btnTest"}*/}
             {/*        onClicked={handleButtonClicked}*/}
@@ -90,9 +107,9 @@ const LoginForm = (props: any) => {
                 onTextChanged={handleTextChanged}
             />
 
-            // Only render the password2 field if mode is signup.
-            // Simply setting hidden to true still causes the element
-            // to be added to the DOM.
+            {/*// Only render the password2 field if mode is signup.*/}
+            {/*// Simply setting hidden to true still causes the element*/}
+            {/*// to be added to the DOM.*/}
             {
                 (mode === LoginFormMode.MODE_SIGNUP) ?
                     <TextEdit
@@ -103,8 +120,8 @@ const LoginForm = (props: any) => {
 
             <Button
                 id={"btnSubmit"}
-                onClicked={handleButtonClicked}
                 text={"Submit"}
+                onClicked={handleButtonClicked}
             />
 
         </div>
@@ -112,4 +129,4 @@ const LoginForm = (props: any) => {
 
 }
 
-export default LoginForm
+export default React.memo(LoginForm)
