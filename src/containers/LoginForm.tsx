@@ -51,6 +51,7 @@ const LoginForm = (props: any) => {
     }
 
     return (
+
         <div style={{
             display: "flex",
             width: "300px",
@@ -63,6 +64,7 @@ const LoginForm = (props: any) => {
             {/*        onClicked={handleButtonClicked}*/}
             {/*        text={"EXTRA TESTY BUTTON"}*/}
             {/*/>*/}
+
 
             <Label
                 text={"Email"}
@@ -88,11 +90,16 @@ const LoginForm = (props: any) => {
                 onTextChanged={handleTextChanged}
             />
 
-            <TextEdit
-                id={"tePassword2"}
-                onTextChanged={handleTextChanged.bind}
-                hidden={mode === LoginFormMode.MODE_LOGIN}
-            />
+            // Only render the password2 field if mode is signup.
+            // Simply setting hidden to true still causes the element
+            // to be added to the DOM.
+            {
+                (mode === LoginFormMode.MODE_SIGNUP) ?
+                    <TextEdit
+                        id={"tePassword2"}
+                        onTextChanged={handleTextChanged.bind}
+                    /> : null
+            }
 
             <Button
                 id={"btnSubmit"}
