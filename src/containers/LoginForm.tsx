@@ -21,6 +21,11 @@ const LoginForm = (props: any) => {
     // Will only get called on mount, one time.
     React.useEffect(() => {
         console.log("Component Did Load")
+
+        //
+        return () => {
+            console.log("Component Did Unload")
+        }
     }, [])
 
     // Will get called whenever the state items
