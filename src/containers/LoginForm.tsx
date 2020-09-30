@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 //
 import TextEdit from "../components/TextEdit";
 import Label from "../components/Label";
@@ -13,6 +13,8 @@ enum LoginFormMode {
 
 const LoginForm = (props: any) => {
 
+    const teEmail = useRef<HTMLInputElement>()
+
     const [email, setEmail] = React.useState("");
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -21,6 +23,10 @@ const LoginForm = (props: any) => {
     // Will only get called on mount, one time.
     React.useEffect(() => {
         console.log("Component Did Load")
+
+        if (teEmail !== null) {
+            teEmail.current?.focus()
+        }
 
         //
         return () => {
@@ -93,6 +99,7 @@ const LoginForm = (props: any) => {
             />
             <TextEdit
                 id={"teEmail"}
+                ref={teEmail}
                 onTextChanged={handleTextChanged}
             />
 
